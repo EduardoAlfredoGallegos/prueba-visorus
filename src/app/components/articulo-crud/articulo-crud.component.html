@@ -1,1 +1,28 @@
-<p>articulo-crud works!</p>
+<button type="button" class="btn btn-warning" [routerLink]="['/home']">Regresar</button>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Clave</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Categoria</th>
+            <th scope="col">Precios</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of articulos">
+            <th scope="row">{{item.id}}</th>
+            <td>{{item.clave}}</td>
+            <td>{{item.nombre}}</td>
+            <td>{{item.categoria.nombre}}</td>
+            <td *ngFor="let i of item.precios">${{i.precio}}|</td>
+            <td><button type="button" class="btn btn-success" [routerLink]="['/articulo', item.id]">Editar</button></td>
+        </tr>
+
+    </tbody>
+</table>
+
+<button type="button" class="btn btn-primary" style="margin: 5px;" [routerLink]="['/articulo']">
+    Agregar articulo
+</button>

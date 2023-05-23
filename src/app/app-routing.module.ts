@@ -17,6 +17,12 @@ const routes: Routes = [
     path: 'articulos', component:ArticuloCrudComponent
   },
   {
+    path: 'articulo', component:ArticuloComponent
+  },
+  {
+    path: 'articulo/:id', component:ArticuloComponent
+  },
+  {
     path: 'categoria', component: CategoriaComponent
   },
   {

@@ -1,6 +1,7 @@
 import { CategoriaModel } from "./categoria.model";
+import { PrecioModel } from "./precio.model";
 
-export class PrecioModel {
+export class ArticuloModel {
     id?: string;
     clave:string;
     categoria: CategoriaModel;

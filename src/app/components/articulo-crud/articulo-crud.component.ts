@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ArticuloModel } from 'src/app/models/articulo.model';
+import { ArticuloServiceService } from 'src/app/services/articulo-service.service';
 
 @Component({
   selector: 'app-articulo-crud',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ArticuloCrudComponent implements OnInit {
 
-  constructor() { }
+  articulos: ArticuloModel[];
+  constructor(private articuloService: ArticuloServiceService) { }
 
   ngOnInit(): void {
+    this.articuloService.getAllArticulos().subscribe(res => {
+      this.articulos = res.data;
+      console.log(this.articulos);
+    });
   }
 
 }

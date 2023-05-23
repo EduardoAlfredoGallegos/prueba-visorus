@@ -5,6 +5,7 @@ import { CategoriaServiceService } from 'src/app/services/categoria-service.serv
 import { FormBuilder, Validators } from '@angular/forms'
 import { Subject } from 'rxjs';
 import { CategoriaModel } from 'src/app/models/categoria.model';
+import { log } from 'console';
 
 @Component({
   selector: 'app-categoria',
@@ -31,11 +32,11 @@ export class CategoriaComponent implements OnInit {
 
   ngOnInit(): void {
     this.categoriaId = this.route.snapshot.params['id'];
+    this.crearCategoriaForm();
     if (this.categoriaId) {
       this.cargarCategoria(this.categoriaId);
     }
 
-    this.crearCategoriaForm();
 
     this.progressSpinner = false;
   }
@@ -49,8 +50,8 @@ export class CategoriaComponent implements OnInit {
 
   crearCategoriaForm() {
     this.categoriaForm = this._formBuilder.group({
-      clave: ['', [Validators.required]],
-      nombre: ['', [Validators.required]]
+      clave: [this.categoria.clave, [Validators.required]],
+      nombre: [this.categoria.nombre, [Validators.required]]
     });
   }
 
@@ -59,7 +60,9 @@ export class CategoriaComponent implements OnInit {
       this.categoria = res;
       this.categoria.clave = this.categoriaForm.value.clave;
       this.categoria.nombre = this.categoriaForm.value.nombre;
-      this.cServicio.updateCategoria(this.categoria);
+      console.log(this.categoriaForm);
+      
+      //this.cServicio.updateCategoria(this.categoria);
     })
   }
 
