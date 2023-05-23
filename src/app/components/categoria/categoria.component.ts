@@ -35,7 +35,6 @@ export class CategoriaComponent implements OnInit {
   cargarCategoria(id: any) {
     this.cServicio.getCategoria(id).subscribe(res => {
       this.categoria = res;
-      console.log(this.categoria);
     })
   }
 
@@ -51,7 +50,6 @@ export class CategoriaComponent implements OnInit {
       this.categoria = res;
       this.categoria.clave = this.categoriaForm.value.clave;
       this.categoria.nombre = this.categoriaForm.value.nombre;
-      console.log(this.categoriaForm);
       this.cServicio.updateCategoria(this.categoria);
     });
     this.cargarCategoria(this.categoriaId);
@@ -63,7 +61,6 @@ export class CategoriaComponent implements OnInit {
   }
 
   guardarCategoria() {
-    console.log(this.categoria);
     this.categoria.clave = this.categoriaForm.get('clave')?.value;
     this.categoria.nombre = this.categoriaForm.get('nombre')?.value;
     this.categoria.fechaCreado = new Date().getMilliseconds();

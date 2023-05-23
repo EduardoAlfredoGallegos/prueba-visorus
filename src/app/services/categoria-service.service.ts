@@ -27,12 +27,10 @@ export class CategoriaServiceService {
       this._httpClient.post(`${this.BASE_URL_CATEGORIA}`, categoria)
         .subscribe({
           next: (response) => {
-
             alert("Se ha agregado con éxito la categoria")
             resolve(response);
           },
           error: (err) => {
-            console.log('error al agregar la respuesta', err);
             var alerta = err.error.error
             for (let index = 0; index < err.error.errores.length; index++) {
               alerta = alerta + "\n" + err.error.errores[index].error;
@@ -52,7 +50,6 @@ export class CategoriaServiceService {
             resolve(response);
           },
           error: (err) => {
-            console.log('error al cambiar la respuesta', err)
             var alerta = err.error.error
             for (let index = 0; index < err.error.errores.length; index++) {
               alerta = alerta + "\n" + err.error.errores[index].error;
@@ -72,7 +69,6 @@ export class CategoriaServiceService {
           resolve(response);
         },
         error: (err) => {
-          console.log('error al eliminar el cuestionario', err);
           var alerta = err.error.error
           for (let index = 0; index < err.error.errores.length; index++) {
             alerta = alerta + "\n" + err.error.errores[index].error;

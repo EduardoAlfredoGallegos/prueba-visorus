@@ -4,7 +4,6 @@ import { CategoriaCrudComponent } from './components/categoria-crud/categoria-cr
 import { CategoriaComponent } from './components/categoria/categoria.component';
 import { ArticuloComponent } from './components/articulo/articulo.component';
 import { ArticuloCrudComponent } from './components/articulo-crud/articulo-crud.component';
-import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [

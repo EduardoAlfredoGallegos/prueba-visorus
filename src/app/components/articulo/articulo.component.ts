@@ -82,7 +82,6 @@ export class ArticuloComponent implements OnInit {
         precio: ['', [Validators.required]],
       })
     );
-    console.log(this.arrayPrecios.controls);
   }
 
   eliminarPrecio(index: number, precio: { value: { id: any; }; }) {
@@ -95,18 +94,13 @@ export class ArticuloComponent implements OnInit {
       this.articulo.clave = this.articuloForm.value.clave;
       this.articulo.nombre = this.articuloForm.value.nombre;
       this.articulo.precios.forEach((precio, index) => {
-
-        console.log(this.articuloForm);
         this.articulo.precios[index] = this.articuloForm.value.precios[index]
-
       });
 
       this.cServicio.getCategoria(this.articuloForm.value.categoria).subscribe(r => {
         var categoria = res;
         this.articulo.categoria = categoria;
         this.articulo.categoria.categoria = null
-        console.log(this.articulo);
-
         this.aServicio.updateArticulo(this.articulo);
         this.cargarArticulo(this.articuloId);
       });
@@ -124,7 +118,6 @@ export class ArticuloComponent implements OnInit {
     this.articulo.clave = this.articuloForm.get('clave')?.value;
     this.articulo.nombre = this.articuloForm.get('nombre')?.value;
     this.articulo.activo = true;
-    console.log();
     for (let index = 0; index < this.articuloForm.value.precios.length; index++) {
       this.articulo.precios[index] = this.articuloForm.value.precios[index];
     }

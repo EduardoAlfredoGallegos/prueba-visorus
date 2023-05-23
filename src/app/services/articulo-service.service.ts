@@ -31,7 +31,6 @@ export class ArticuloServiceService {
             resolve(response);
           },
           error: (err) => {
-            console.log('error al agregar articulo', err);
             var alerta = err.error.error
             for (let index = 0; index < err.error.errores.length; index++) {
               alerta = alerta + "\n" + err.error.errores[index].error;
@@ -51,7 +50,6 @@ export class ArticuloServiceService {
             resolve(response);
           },
           error: (err) => {
-            console.log('error al actualizar el articulo', err)
             var alerta = err.error.error
             for (let index = 0; index < err.error.errores.length; index++) {
               alerta = alerta + "\n" + err.error.errores[index].error;
@@ -70,7 +68,6 @@ export class ArticuloServiceService {
           resolve(response);
         },
         error: (err) => {
-          console.log('error al eliminar el articulo', err);
           var alerta = err.error.error
           for (let index = 0; index < err.error.errores.length; index++) {
             alerta = alerta + "\n" + err.error.errores[index].error;

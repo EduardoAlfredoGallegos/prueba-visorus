@@ -15,7 +15,6 @@ export class ArticuloCrudComponent implements OnInit {
   ngOnInit(): void {
     this.articuloService.getAllArticulos().subscribe(res => {
       this.articulos = res.data;
-      console.log(this.articulos);
     });
   }
 
