@@ -9,8 +9,9 @@ import { CategoriaModel } from '../models/categoria.model';
 })
 export class CategoriaServiceService {
 
+  categoria:any;
   private SERVER = environment.server;
-  BASE_URL_CATEGORIA = `${this.SERVER}/categoria`;
+  BASE_URL_CATEGORIA = `${this.SERVER}categoria`;
   constructor(private _httpClient: HttpClient) { }
 
   getAllCategorias(): Observable<any> {
@@ -51,7 +52,7 @@ export class CategoriaServiceService {
 
   deleteCategoria(id: any): Promise<any> {
     return new Promise((resolve) => {
-      this._httpClient.delete(`${this.BASE_URL_CATEGORIA}`, id).subscribe({
+      this._httpClient.delete(`${this.BASE_URL_CATEGORIA}/${id}`).subscribe({
         next: (response) => {
           resolve(response);
         },

@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class ArticuloServiceService {
+export class PrecioServiceService {
 
   private SERVER = environment.server;
   BASE_URL_ARTICULO = `${this.SERVER}/articulo`;

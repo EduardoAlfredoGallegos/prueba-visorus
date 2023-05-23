@@ -1,1 +1,14 @@
-<p>categoria-crud works!</p>
+<button type="button" class="btn btn-primary" style="margin: 5px;" [routerLink]="['/categoria']">
+    Agregar categoría
+</button>
+
+<div type="button" [routerLink]="['/categoria', item.id]" *ngFor="let item of categorias" class="card"
+    style="width: 18rem; margin: 5px;">
+    <div class="card-body">
+        <h5 class="card-title">{{item.nombre}}</h5>
+        <h6 class="card-text">{{item.clave}}</h6>
+    </div>
+</div>
+
+<button type="button" class="btn btn-warning" [routerLink]="['/home']">Regresar</button>
+    

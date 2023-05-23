@@ -1,0 +1,36 @@
+
+<div style="width: 80%; align-items: center; text-align: center;">
+    <button type="button" class="btn btn-warning" [routerLink]="['/categorias']">Regresar</button>
+    <div><h3 *ngIf="categoriaId">Datos anteriores <br> Nombre:{{categoria.nombre}} <br> Clave:{{categoria.clave}} </h3></div>
+    <form [formGroup]="categoriaForm" >
+        <div>
+            <label for="">Clave</label>
+            <input type="text" id="clave" class="form-control" formControlName="clave" placeholder="Clave"
+                required />
+        </div>
+        <div>
+            <label for="">Nombre</label>
+            <input type="text" class="form-control" id="nombre" formControlName="nombre" placeholder="Nombre"
+                required />
+        </div>
+
+        <div *ngIf="categoriaId">
+            <button type="button" class="btn btn-primary"
+                (click)="editarCategoria()">
+                <span>Editar</span>
+            </button>
+        </div>
+        <div *ngIf="categoriaId">
+            <button type="button" class="btn btn-danger"
+                (click)="eliminarCategoria()">
+                <span>Eliminar categoria</span>
+            </button>
+        </div>
+        <div *ngIf="!categoriaId">
+            <button type="button" class="btn btn-success"
+                (click)="guardarCategoria()">
+                <span>Guardar</span>
+            </button>
+        </div>
+    </form>
+</div>

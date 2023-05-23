@@ -8,7 +8,7 @@ export class PrecioModel {
     precios: PrecioModel[];
     activo: boolean;
 
-    contructor(item?:any){
+    constructor(item?:any){
         item=item||{};
         if (item.id) {
             this.id = item.id;
