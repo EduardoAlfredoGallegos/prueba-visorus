@@ -1,1 +1,72 @@
-<p>articulo works!</p>
+<div style="width: 80%; align-items: center; text-align: center;">
+    <button type="button" class="btn btn-warning" [routerLink]="['/articulos']">Regresar</button>
+    <div *ngIf="articuloId">
+        <h3><b>Datos anteriores <br> Nombre:{{articulo.nombre}}
+                <br> Clave:{{articulo.clave}} <br> Precios:</b></h3>
+        <h4 *ngFor="let item of articulo.precios">${{item.precio}}</h4>
+    </div>
+    <form [formGroup]="articuloForm">
+        <div>
+            <label for="">Clave</label>
+            <input type="text" id="clave" class="form-control" formControlName="clave" placeholder="Clave" required />
+            <span *ngIf="articuloForm.get('clave')?.hasError('required')">
+                Campo obligatorio
+            </span>
+        </div>
+        <div>
+            <label for="">Nombre</label>
+            <input type="text" class="form-control" id="nombre" formControlName="nombre" placeholder="Nombre"
+                required />
+            <span *ngIf="articuloForm.get('nombre')?.hasError('required')">
+                Campo obligatorio
+            </span>
+        </div>
+
+        <div>
+            <label for="">Categoria</label>
+            <select class="form-control" id="categoria" formControlName="categoria" placeholder="Categoria" required>
+                <option *ngFor="let item of categorias" value="{{item.id}}">{{item.nombre}}</option>
+            </select>
+            <span *ngIf="articuloForm.get('categoria')?.hasError('required')">
+                Campo obligatorio
+            </span>
+        </div>
+
+        <div formArrayName="precios">
+            <label for="">Precios</label>
+            <div *ngFor="let p of arrayPrecios.controls; let i = index">
+                <div [formGroupName]="i">
+                    <input id="precio" type="number" class="form-control" [formControlName]="'precio'"
+                        placeholder="Precio" required />
+                    <span *ngIf="p.get('precio')?.hasError('required')">
+                        Campo obligatorio
+                    </span>
+                    <div  *ngIf="!articuloId">
+                        <button  class="btn btn-danger" (click)="eliminarPrecio(i, p)">Eliminar precio</button>
+                    </div>
+                </div>
+            </div>
+            <div  *ngIf="!articuloId">
+                <button class="btn btn-primary" (click)="agregarPrecio()">Agregar precio</button>
+            </div>
+        </div>
+
+        <div *ngIf="articuloId">
+            <button type="button" class="btn btn-primary" [disabled]="articuloForm.get('nombre')?.hasError('required') 
+            || articuloForm.get('clave')?.hasError('required')" (click)="editarArticulo()">
+                <span>Editar articulo</span>
+            </button>
+        </div>
+        <div *ngIf="articuloId">
+            <button type="button" class="btn btn-danger" (click)="eliminarArticulo()">
+                <span>Eliminar articulo</span>
+            </button>
+        </div>
+        <div *ngIf="!articuloId">
+            <button type="button" [disabled]="articuloForm.status == 'INVALID'" class="btn btn-success"
+                (click)="guardarArticulo()">
+                <span>Guardar articulo</span>
+            </button>
+        </div>
+    </form>
+</div>

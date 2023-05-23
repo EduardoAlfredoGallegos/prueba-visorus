@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 export class ArticuloServiceService {
 
   private SERVER = environment.server;
-  BASE_URL_ARTICULO = `${this.SERVER}/articulo`;
+  BASE_URL_ARTICULO = `${this.SERVER}articulo`;
   constructor(private _httpClient: HttpClient) { }
 
   getAllArticulos(): Observable<any> {
@@ -27,24 +27,36 @@ export class ArticuloServiceService {
       this._httpClient.post(`${this.BASE_URL_ARTICULO}`, articulo)
         .subscribe({
           next: (response) => {
+            alert("Se ha agregado con éxito el articulo");
             resolve(response);
           },
           error: (err) => {
-            console.log('error al agregar la respuesta', err);
+            console.log('error al agregar articulo', err);
+            var alerta = err.error.error
+            for (let index = 0; index < err.error.errores.length; index++) {
+              alerta = alerta + "\n" + err.error.errores[index].error;
+            }
+            alert(alerta);
           }
         });
     });
   }
 
-  updateCategoria(articulo: ArticuloModel): Promise<any> {
+  updateArticulo(articulo: any): Promise<any> {
     return new Promise((resolve) => {
       this._httpClient.put(`${this.BASE_URL_ARTICULO}/${articulo.id}`, articulo)
         .subscribe({
           next: (response) => {
+            alert("Se ha modificado con éxito el articulo, si no se muestra el cambio le sugerimos recargar nuevamente la página")
             resolve(response);
           },
           error: (err) => {
-            console.log('error al cambiar la respuesta', err)
+            console.log('error al actualizar el articulo', err)
+            var alerta = err.error.error
+            for (let index = 0; index < err.error.errores.length; index++) {
+              alerta = alerta + "\n" + err.error.errores[index].error;
+            }
+            alert(alerta);
           }
         })
     });
@@ -54,10 +66,16 @@ export class ArticuloServiceService {
     return new Promise((resolve) => {
       this._httpClient.delete(`${this.BASE_URL_ARTICULO}/${id}`).subscribe({
         next: (response) => {
+          alert("Se ha eliminado con éxito el articulo, si no se muestra el cambio le sugerimos recargar nuevamente la página")
           resolve(response);
         },
         error: (err) => {
-          console.log('error al eliminar el cuestionario', err);
+          console.log('error al eliminar el articulo', err);
+          var alerta = err.error.error
+          for (let index = 0; index < err.error.errores.length; index++) {
+            alerta = alerta + "\n" + err.error.errores[index].error;
+          }
+          alert(alerta);
         }
       })
     })

@@ -2,6 +2,7 @@ export class CategoriaModel {
     id?:string;
     clave: string;
     fechaCreado: number;
+    categoria?:any;
     nombre: string;
     activo: boolean;
 

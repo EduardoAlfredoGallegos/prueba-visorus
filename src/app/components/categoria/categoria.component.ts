@@ -3,9 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoriaServiceService } from 'src/app/services/categoria-service.service';
 import { FormBuilder, Validators } from '@angular/forms'
-import { Subject } from 'rxjs';
 import { CategoriaModel } from 'src/app/models/categoria.model';
-import { log } from 'console';
 
 @Component({
   selector: 'app-categoria',
@@ -14,21 +12,17 @@ import { log } from 'console';
 })
 export class CategoriaComponent implements OnInit {
 
-  pageType: any;
-  categoria: CategoriaModel={
-    clave:'',
-    nombre:'',
-    fechaCreado:0,
-    activo:true
+  categoria: CategoriaModel = {
+    clave: '',
+    nombre: '',
+    fechaCreado: 0,
+    activo: true
   }
   categoriaId: any;
   categoriaForm: FormGroup;
-  progressSpinner: boolean;
-  disabled = false;
-  _unsubscribeAll: Subject<any>
 
   constructor(private route: ActivatedRoute, private cServicio: CategoriaServiceService,
-    private _formBuilder: FormBuilder, private enrutador: Router) {}
+    private _formBuilder: FormBuilder, private enrutador: Router) { }
 
   ngOnInit(): void {
     this.categoriaId = this.route.snapshot.params['id'];
@@ -36,9 +30,6 @@ export class CategoriaComponent implements OnInit {
     if (this.categoriaId) {
       this.cargarCategoria(this.categoriaId);
     }
-
-
-    this.progressSpinner = false;
   }
 
   cargarCategoria(id: any) {
@@ -61,12 +52,12 @@ export class CategoriaComponent implements OnInit {
       this.categoria.clave = this.categoriaForm.value.clave;
       this.categoria.nombre = this.categoriaForm.value.nombre;
       console.log(this.categoriaForm);
-      
-      //this.cServicio.updateCategoria(this.categoria);
-    })
+      this.cServicio.updateCategoria(this.categoria);
+    });
+    this.cargarCategoria(this.categoriaId);
   }
 
-  eliminarCategoria(){
+  eliminarCategoria() {
     this.cServicio.deleteCategoria(this.categoriaId);
     this.enrutador.navigate(['/categorias'])
   }

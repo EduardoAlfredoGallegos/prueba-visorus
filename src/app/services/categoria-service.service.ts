@@ -9,7 +9,7 @@ import { CategoriaModel } from '../models/categoria.model';
 })
 export class CategoriaServiceService {
 
-  categoria:any;
+  categoria: any;
   private SERVER = environment.server;
   BASE_URL_CATEGORIA = `${this.SERVER}categoria`;
   constructor(private _httpClient: HttpClient) { }
@@ -27,10 +27,17 @@ export class CategoriaServiceService {
       this._httpClient.post(`${this.BASE_URL_CATEGORIA}`, categoria)
         .subscribe({
           next: (response) => {
+
+            alert("Se ha agregado con éxito la categoria")
             resolve(response);
           },
           error: (err) => {
             console.log('error al agregar la respuesta', err);
+            var alerta = err.error.error
+            for (let index = 0; index < err.error.errores.length; index++) {
+              alerta = alerta + "\n" + err.error.errores[index].error;
+            }
+            alert(alerta);
           }
         });
     });
@@ -41,10 +48,16 @@ export class CategoriaServiceService {
       this._httpClient.put(`${this.BASE_URL_CATEGORIA}/${categoria.id}`, categoria)
         .subscribe({
           next: (response) => {
+            alert("Se ha eliminado con éxito la categoria, si no se muestra el cambio le sugerimos recargar nuevamente la página")
             resolve(response);
           },
           error: (err) => {
             console.log('error al cambiar la respuesta', err)
+            var alerta = err.error.error
+            for (let index = 0; index < err.error.errores.length; index++) {
+              alerta = alerta + "\n" + err.error.errores[index].error;
+            }
+            alert(alerta);
           }
         })
     });
@@ -54,10 +67,17 @@ export class CategoriaServiceService {
     return new Promise((resolve) => {
       this._httpClient.delete(`${this.BASE_URL_CATEGORIA}/${id}`).subscribe({
         next: (response) => {
+
+          alert("Se ha eliminado con éxito la categoria, si no se muestra el cambio le sugerimos recargar nuevamente la página")
           resolve(response);
         },
         error: (err) => {
           console.log('error al eliminar el cuestionario', err);
+          var alerta = err.error.error
+          for (let index = 0; index < err.error.errores.length; index++) {
+            alerta = alerta + "\n" + err.error.errores[index].error;
+          }
+          alert(alerta);
         }
       })
     })
