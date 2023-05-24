@@ -7,6 +7,7 @@ import { PrecioModel } from 'src/app/models/precio.model';
 import { ArticuloServiceService } from 'src/app/services/articulo-service.service';
 import { CategoriaServiceService } from 'src/app/services/categoria-service.service';
 import { parse, stringify, toJSON, fromJSON } from 'flatted';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-articulo',
@@ -55,17 +56,46 @@ export class ArticuloComponent implements OnInit {
   }
 
   cargarArticulo(id: any) {
-    this.aServicio.getArticulo(id).subscribe(res => {
-      this.articulo = res;
-      this.articulo.precios.forEach((precio, index) => {
-        this.arrayPrecios.push(
-          this._formBuilder.group({
-            id: [precio.id],
-            precio: ['', [Validators.required]],
+    this.aServicio.getArticulo(id).subscribe({
+      next: (response) => {
+        if (response.activo) {
+          this.articulo = response;
+          this.articulo.precios.forEach((precio, index) => {
+            this.arrayPrecios.push(
+              this._formBuilder.group({
+                id: [precio.id],
+                precio: ['', [Validators.required]],
+              })
+            );
+          });
+        } else {
+          Swal.fire({
+            title: 'El articulo a la que intenta acceder ha sido eliminado',
+            icon: 'error',
+            confirmButtonText: 'Entendido'
+          });
+          this.enrutador.navigate(['/articulos'])
+        }
+      },
+      error: (err) => {
+
+        if (err.status == 500) {
+          Swal.fire({
+            title: 'El articulo a la que intenta acceder no existe',
+            icon: 'error',
+            confirmButtonText: 'Entendido'
           })
-        );
-      });
-    })
+          this.enrutador.navigate(['/articulos'])
+        } else {
+          Swal.fire({
+            title: 'No se han podido obtener la información del articulo',
+            text: 'Intente más tarde',
+            icon: 'error',
+            confirmButtonText: 'Entendido'
+          })
+        }
+      }
+    });
   }
 
   crearArticuloForm() {

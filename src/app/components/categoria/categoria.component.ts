@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CategoriaServiceService } from 'src/app/services/categoria-service.service';
 import { FormBuilder, Validators } from '@angular/forms'
 import { CategoriaModel } from 'src/app/models/categoria.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-categoria',
@@ -33,9 +34,37 @@ export class CategoriaComponent implements OnInit {
   }
 
   cargarCategoria(id: any) {
-    this.cServicio.getCategoria(id).subscribe(res => {
-      this.categoria = res;
-    })
+    this.cServicio.getCategoria(id).subscribe({
+      next: (response) => {
+        if (response.activo) {
+          this.categoria = response;
+        } else {
+          Swal.fire({
+            title: 'La categoría a la que intenta acceder ha sido eliminada',
+            icon: 'error',
+            confirmButtonText: 'Entendido'
+          });
+          this.enrutador.navigate(['/categorias'])
+        }
+      },
+      error: (err) => {
+        if (err.status == 500) {
+          Swal.fire({
+            title: 'La categoría a la que intenta acceder no existe',
+            icon: 'error',
+            confirmButtonText: 'Entendido'
+          })
+          this.enrutador.navigate(['/categorias'])
+        } else {
+          Swal.fire({
+            title: 'No se han podido obtener la información de la categoria',
+            text: 'Intente más tarde',
+            icon: 'error',
+            confirmButtonText: 'Entendido'
+          })
+        }
+      }
+    });
   }
 
   crearCategoriaForm() {

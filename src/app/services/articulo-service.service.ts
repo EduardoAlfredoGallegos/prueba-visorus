@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { CategoriaModel } from '../models/categoria.model';
 import { ArticuloModel } from '../models/articulo.model';
 import { Observable } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -27,15 +28,24 @@ export class ArticuloServiceService {
       this._httpClient.post(`${this.BASE_URL_ARTICULO}`, articulo)
         .subscribe({
           next: (response) => {
-            alert("Se ha agregado con éxito el articulo");
+            Swal.fire({
+              title: 'Se ha agregado con éxito el articulo',
+              icon: 'success',
+              confirmButtonText: 'Entendido'
+            })
             resolve(response);
           },
           error: (err) => {
-            var alerta = err.error.error
+            var alerta: string = '';
             for (let index = 0; index < err.error.errores.length; index++) {
               alerta = alerta + "\n" + err.error.errores[index].error;
             }
-            alert(alerta);
+            Swal.fire({
+              title: err.error.error,
+              text: alerta,
+              icon: 'error',
+              confirmButtonText: 'Entendido'
+            })
           }
         });
     });
@@ -44,37 +54,56 @@ export class ArticuloServiceService {
   updateArticulo(articulo: any): Promise<any> {
     return new Promise((resolve) => {
       this._httpClient.put(`${this.BASE_URL_ARTICULO}/${articulo.id}`, articulo)
-        .subscribe({
-          next: (response) => {
-            alert("Se ha modificado con éxito el articulo, si no se muestra el cambio le sugerimos recargar nuevamente la página")
-            resolve(response);
-          },
-          error: (err) => {
-            var alerta = err.error.error
-            for (let index = 0; index < err.error.errores.length; index++) {
-              alerta = alerta + "\n" + err.error.errores[index].error;
-            }
-            alert(alerta);
+      .subscribe({
+        next: (response) => {
+          Swal.fire({
+            title: 'Se ha modificado con éxito el articulo, si no se muestra el cambio le sugerimos recargar nuevamente la página',
+            icon: 'success',
+            confirmButtonText: 'Entendido'
+          })
+          resolve(response);
+        },
+        error: (err) => {
+          var alerta: string = '';
+          for (let index = 0; index < err.error.errores.length; index++) {
+            alerta = alerta + "\n" + err.error.errores[index].error;
           }
-        })
+          Swal.fire({
+            title: err.error.error,
+            text: alerta,
+            icon: 'error',
+            confirmButtonText: 'Entendido'
+          })
+        }
+      });
     });
   }
 
   deleteArticulo(id: any): Promise<any> {
     return new Promise((resolve) => {
-      this._httpClient.delete(`${this.BASE_URL_ARTICULO}/${id}`).subscribe({
+      this._httpClient.delete(`${this.BASE_URL_ARTICULO}/${id}`)
+      .subscribe({
         next: (response) => {
-          alert("Se ha eliminado con éxito el articulo, si no se muestra el cambio le sugerimos recargar nuevamente la página")
+          Swal.fire({
+            title: 'Se ha eliminado con éxito el articulo, si no se muestra el cambio le sugerimos recargar nuevamente la página',
+            icon: 'success',
+            confirmButtonText: 'Entendido'
+          })
           resolve(response);
         },
         error: (err) => {
-          var alerta = err.error.error
+          var alerta: string = '';
           for (let index = 0; index < err.error.errores.length; index++) {
             alerta = alerta + "\n" + err.error.errores[index].error;
           }
-          alert(alerta);
+          Swal.fire({
+            title: err.error.error,
+            text: alerta,
+            icon: 'error',
+            confirmButtonText: 'Entendido'
+          })
         }
-      })
+      });
     })
   }
 }
