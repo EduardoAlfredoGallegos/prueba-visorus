@@ -110,7 +110,7 @@ export class ArticuloComponent implements OnInit {
 
   eliminarArticulo() {
     this.aServicio.deleteArticulo(this.articuloId);
-    this.enrutador.navigate(['/categorias'])
+    this.enrutador.navigate(['/articulos'])
   }
 
   guardarArticulo() {
